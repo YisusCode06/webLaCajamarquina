@@ -1,5 +1,4 @@
 <script setup>
-import "./Login.css";
 import "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js";
 import "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js";
 import axios from 'axios';
@@ -59,4 +58,6 @@ const handleSubmit = async (event) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@import url('./Login.css');
+</style>

@@ -3,9 +3,10 @@
 </script>
 
 <template>
-  <h1>Dashboard 1</h1>
+  
+  <div class="content-dashboard">  <h1>Layout dd</h1></div>
 </template>
 
 <style scoped>
-
+@import url('./Dashboard.css')
 </style>

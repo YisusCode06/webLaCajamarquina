@@ -1,6 +1,10 @@
 <script setup>
-import Dashboard from '@/components/dashboard/Dashboard.vue'
+import Sidebar from '@/components/dashboard/sidebar/Sidebar.vue'
 </script>
+
 <template>
-    <Dashboard/>
+  <Sidebar />
+  <div class="content-dashboard">
+    <router-view />
+  </div>
 </template>
