@@ -1,0 +1,128 @@
+.gen-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  height: 100vh;
+  width: 20vw;
+  border-radius: 0px 18px 18px 0px;
+  position: relative;
+  transition: all 0.5s;
+  min-width: 82px;
+  z-index: 2;
+}
+.collapsed{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  height: 100vh;
+  width: 5vw;
+  border-radius: 0px 18px 18px 0px;
+  position: relative;
+  transition: all 0.5s;
+  min-width: 82px;
+  z-index: 2;
+}
+.btn-control {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+}
+.btn-control ion-icon {
+  font-size: 35px;
+}
+.content-sidebar {
+  padding: 12px;
+}
+.image-container {
+  margin-top: 40px;
+  padding: 10px;
+}
+.image-container img {
+  width: 100%;
+}
+.options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.option-container {
+  border-top: solid black;
+  border-right: solid black;
+  border-bottom: solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 15px 15px 0px;
+  color: #333;
+  text-decoration: none;
+}
+
+.option-container-collapsed{
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 15px 15px 0px;
+  color: #333;
+}
+.option-container-collapsed span{
+  display: none;
+}
+.option-container-collapsed ion-icon{
+  font-size: 35px;
+}
+.option-container span{
+  font-size: 30px;
+  text-align: start;
+  width: 50%;
+  padding-left: 5px;
+}
+.option-container ion-icon {
+  font-size: 30px;
+}
+.content-perfil {
+  border-top: solid black;
+  border-left: solid black;
+  border-bottom: solid black;
+  border-radius: 15px 0px 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px;
+}
+.content-perfil img {
+  padding: 5%;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+.content-perfil p {
+  padding-right: 5px;
+  font-weight: bold;
+  color: #333;
+}
+.content-perfil-collapsed{
+  border-top: solid black;
+  border-left: solid black;
+  border-bottom: solid black;
+  border-radius: 15px 0px 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px;
+}
+.content-perfil-collapsed img{
+  padding: 5%;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+.content-perfil-collapsed p {
+  display: none;
+}

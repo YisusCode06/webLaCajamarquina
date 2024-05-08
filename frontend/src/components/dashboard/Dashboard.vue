@@ -1,12 +1,11 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  
-  <div class="content-dashboard">  <h1>Layout dd</h1></div>
+  <div>
+    <div class="content-dashboard"><h1>Layout dd</h1></div>
+  </div>
 </template>
 
 <style scoped>
-@import url('./Dashboard.css')
+@import url('./Dashboard.css');
 </style>

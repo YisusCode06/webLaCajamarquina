@@ -1,4 +1,4 @@
 <script setup></script>
 <template>
-    <div>Usuarios</div>
+    <div>Reportes</div>
 </template>

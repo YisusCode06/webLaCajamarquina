@@ -1,6 +1,4 @@
 <script setup>
-import "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js";
-import "https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js";
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
