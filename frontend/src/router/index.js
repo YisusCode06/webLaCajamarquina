@@ -6,7 +6,7 @@ import Tables from '@/components/dashboard/tables/Tables.vue'
 import Menu from '@/components/dashboard/menu/Menu.vue'
 import Orders from '@/components/dashboard/orders/Orders.vue'
 import Reports from '@/components/dashboard/reports/Reports.vue'
-
+import Profile from '@/components/dashboard/profile/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +44,10 @@ const router = createRouter({
         {
           path:'reports',
           component: Reports,
+        },
+        {
+          path: 'profile',
+          component: Profile,
         }
       ]
     }

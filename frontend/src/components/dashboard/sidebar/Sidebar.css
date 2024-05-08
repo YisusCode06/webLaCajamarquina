@@ -11,7 +11,7 @@
   min-width: 82px;
   z-index: 2;
 }
-.collapsed{
+.collapsed {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -62,7 +62,7 @@
   text-decoration: none;
 }
 
-.option-container-collapsed{
+.option-container-collapsed {
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
@@ -71,13 +71,13 @@
   border-radius: 0px 15px 15px 0px;
   color: #333;
 }
-.option-container-collapsed span{
+.option-container-collapsed span {
   display: none;
 }
-.option-container-collapsed ion-icon{
+.option-container-collapsed ion-icon {
   font-size: 35px;
 }
-.option-container span{
+.option-container span {
   font-size: 30px;
   text-align: start;
   width: 50%;
@@ -107,7 +107,7 @@
   font-weight: bold;
   color: #333;
 }
-.content-perfil-collapsed{
+.content-perfil-collapsed {
   border-top: solid black;
   border-left: solid black;
   border-bottom: solid black;
@@ -117,7 +117,7 @@
   align-items: center;
   margin: 12px;
 }
-.content-perfil-collapsed img{
+.content-perfil-collapsed img {
   padding: 5%;
   width: 40px;
   height: 40px;
@@ -125,4 +125,42 @@
 }
 .content-perfil-collapsed p {
   display: none;
+}
+
+@media only screen and (max-width: 480px) {
+  .collapsed {
+    min-width: 60px;
+    width: 20vw;
+  }
+  .btn-control {
+    display: none;
+  }
+  .image-container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+  .image-container img{
+    transform: scale(1.6);
+  }
+  .option-container-collapsed{
+    flex-direction: column;
+    
+  }
+  .option-container{
+    text-decoration: none;
+  }
+  .option-container-collapsed span {
+    display: block;
+    font-size: 0.7rem;
+  }
+  .option-container-collapsed ion-icon {
+    font-size: 25px;
+  }
+}
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+}
+@media only screen and (min-width: 1025px) {
+  /* En caso modificar Estilos */
 }

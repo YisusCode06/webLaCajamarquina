@@ -20,5 +20,6 @@ import Sidebar from '@/components/dashboard/sidebar/Sidebar.vue'
   display: flex;
   min-height: 100vh;
   background-color: #e3e9f7;
+  padding: 15px;
 }
 </style>

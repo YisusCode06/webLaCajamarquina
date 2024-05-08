@@ -12,7 +12,9 @@ const toggleMenu = () => {
     </div>
     <div class="content-sidebar">
       <div class="image-container">
-        <img src="../../../assets/laCajamarquina/logoCajamarquina.png" alt="" />
+        <router-link to="/dashboard">
+          <img src="../../../assets/laCajamarquina/logoCajamarquina.png" alt="" />
+        </router-link>
       </div>
       <div class="options-conteiner">
         <router-link
@@ -52,10 +54,12 @@ const toggleMenu = () => {
         </router-link>
       </div>
     </div>
-    <div :class="[menuOpen ? 'content-perfil' : 'content-perfil-collapsed']">
-      <img src="https://pics.filmaffinity.com/brad_pitt-180902992984558-nm_large.jpg" alt="" />
-      <p>Jesus Bernui</p>
-    </div>
+    <router-link to="/dashboard/profile">
+      <div :class="[menuOpen ? 'content-perfil' : 'content-perfil-collapsed']">
+        <img src="https://pics.filmaffinity.com/brad_pitt-180902992984558-nm_large.jpg" alt="" />
+        <p>Jesus Bernui</p>
+      </div>
+    </router-link>
   </div>
 </template>
 <style>
