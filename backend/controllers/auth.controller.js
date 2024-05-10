@@ -3,9 +3,9 @@ import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password, role, name, dni, phone } = req.body;
   try {
-    const user = new User({ email, password, role });
+    const user = new User({ email, password, role, name, dni, phone });
 
     await user.save();
 
@@ -55,12 +55,46 @@ export const login = async (req, res) => {
   }
 };
 
-export const infoUser = async (req, res) => {
+export const editUserById = async (req, res) => {
+  const { id } = req.params;
+  const { email, password, role, name, dni, phone } = req.body;
   try {
-    const user = await User.findById(req.uid);
-    return res.json({ user });
+    const user = await User.findByIdAndUpdate(id, { email, password, role, name, dni, phone }, { new: true });
+    if (!user) {
+      return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
+    }
+    return res.json({ ok: true, user });
   } catch (error) {
-    return res.status(500).json({ error: error });
+    console.log(error);
+    return res.status(500).json({ error: "Error de servidor" });
+  }
+};
+
+export const deleteUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
+    }
+    return res.json({ ok: true, msg: "Usuario eliminado correctamente" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Error de servidor" });
+  }
+};
+
+export const getUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
+    }
+    return res.json({ ok: true, user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Error de servidor" });
   }
 };
 

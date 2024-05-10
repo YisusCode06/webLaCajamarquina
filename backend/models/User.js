@@ -20,6 +20,19 @@ const userSchema = new Schema({
     enum: ["ADMIN", "USER"],
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  dni: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -35,8 +48,8 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.methods.comparePassword= async function(candidatePassword){
-    return await bcryptjs.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcryptjs.compare(candidatePassword, this.password);
 }
 
 export const User = model("user", userSchema);

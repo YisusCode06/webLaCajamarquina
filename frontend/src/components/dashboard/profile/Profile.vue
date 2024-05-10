@@ -1,4 +1,5 @@
 <script setup></script>
 <template>
-    <div>Perfil Usuario</div>
+    
+    <div>Perfil Usuario Hello</div>
 </template>
