@@ -1,9 +1,31 @@
 <script setup>
-import { ref } from 'vue'
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+const userData = ref(null);
 const menuOpen = ref(false)
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
 }
+onMounted(async () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('No se ha encontrado un token de autenticación.');
+    return;
+  }
+
+  try {
+    const response = await axios.get('http://localhost:3000/api/v1/getuser', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    userData.value = response.data.user;
+    console.log(userData.value);
+
+  } catch (error) {
+    console.error('Error al obtener los datos del perfil:', error.message);
+  }
+});
 </script>
 <template>
   <div :class="[menuOpen ? 'gen-sidebar' : 'collapsed']">
@@ -17,38 +39,23 @@ const toggleMenu = () => {
         </router-link>
       </div>
       <div class="options-conteiner">
-        <router-link
-          to="/dashboard/users"
-          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']"
-        >
+        <router-link v-if="userData && userData.role !== 'USER'" to="/dashboard/users" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="people-outline"></ion-icon>
           <span>Usuarios</span>
         </router-link>
-        <router-link
-          to="/dashboard/menu"
-          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']"
-        >
+        <router-link to="/dashboard/menu" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="book-outline"></ion-icon>
           <span>Menus</span>
         </router-link>
-        <router-link
-          to="/dashboard/tables"
-          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']"
-        >
+        <router-link to="/dashboard/tables" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="bowling-ball-outline"></ion-icon>
           <span>Mesas</span>
         </router-link>
-        <router-link
-          to="/dashboard/orders"
-          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']"
-        >
+        <router-link to="/dashboard/orders" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="apps-outline"></ion-icon>
           <span>Pedidos</span>
         </router-link>
-        <router-link
-          to="/dashboard/reports"
-          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']"
-        >
+        <router-link to="/dashboard/reports" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="server-outline"></ion-icon>
           <span>Reportes</span>
         </router-link>
@@ -57,7 +64,7 @@ const toggleMenu = () => {
     <router-link to="/dashboard/profile">
       <div :class="[menuOpen ? 'content-perfil' : 'content-perfil-collapsed']">
         <img src="https://pics.filmaffinity.com/brad_pitt-180902992984558-nm_large.jpg" alt="" />
-        <p>Jesus Bernui</p>
+        <p>{{ userData ? userData.name : '' }}</p>
       </div>
     </router-link>
   </div>
