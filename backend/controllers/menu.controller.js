@@ -2,9 +2,9 @@ import { Menu } from '../models/Menu.js';
 
 // Controlador para crear un nuevo menú
 export const createMenu = async (req, res) => {
-    const { name, type, description, category, price } = req.body;
+    const { name, description, category, price } = req.body;
     try {
-        const menu = new Menu({ name, type, description, category, price });
+        const menu = new Menu({ name, description, category, price });
         await menu.save();
         return res.status(201).json({ success: true, message: 'Menú creado exitosamente', menu });
     } catch (error) {
@@ -16,9 +16,9 @@ export const createMenu = async (req, res) => {
 // Controlador para editar un menú por su ID
 export const editMenuById = async (req, res) => {
     const { id } = req.params;
-    const { name, type, description, category, price } = req.body;
+    const { name, description, category, price } = req.body;
     try {
-        const updatedMenu = await Menu.findByIdAndUpdate(id, { name, type, description, category, price }, { new: true });
+        const updatedMenu = await Menu.findByIdAndUpdate(id, { name, description, category, price }, { new: true });
         if (!updatedMenu) {
             return res.status(404).json({ success: false, message: 'Menú no encontrado' });
         }

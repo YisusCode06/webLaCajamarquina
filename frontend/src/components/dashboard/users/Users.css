@@ -51,30 +51,33 @@ button {
     background-color: rgba(0, 128, 0, 0.637);
     margin-bottom: 20px;
 }
-.cont-newuser form{
+
+.cont-newuser form {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .cont-newuser form label {
     margin-bottom: 5px;
     font-weight: bold;
-  }
-  
-  .cont-newuser form input{
+}
+
+.cont-newuser form input {
     margin-bottom: 10px;
     border: solid black 2px;
     padding: 5px;
     border-radius: 10px;
-  }
-  .cont-newuser select{
+}
+
+.cont-newuser select {
     margin-bottom: 10px;
     border: solid black 2px;
     padding: 5px;
     border-radius: 10px;
-  }
-  
-  .cont-newuser form button {
+}
+
+.cont-newuser form button {
     background-color: rgb(240, 192, 60);
     padding: 5px;
     margin: 10px;
@@ -82,4 +85,4 @@ button {
     width: 15%;
     font-weight: bolder;
     border-radius: 15px;
-  }
+}
