@@ -39,17 +39,18 @@ onMounted(async () => {
         </router-link>
       </div>
       <div class="options-conteiner">
-        <router-link v-if="userData && userData.role !== 'USER'" to="/dashboard/users" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
+        <router-link v-if="userData && userData.role !== 'USER'" to="/dashboard/users"
+          :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="people-outline"></ion-icon>
           <span>Usuarios</span>
-        </router-link>
-        <router-link to="/dashboard/menu" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
-          <ion-icon name="book-outline"></ion-icon>
-          <span>Menus</span>
         </router-link>
         <router-link to="/dashboard/tables" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="bowling-ball-outline"></ion-icon>
           <span>Mesas</span>
+        </router-link>
+        <router-link to="/dashboard/menu" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
+          <ion-icon name="book-outline"></ion-icon>
+          <span>Menus</span>
         </router-link>
         <router-link to="/dashboard/orders" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
           <ion-icon name="apps-outline"></ion-icon>

@@ -1,0 +1,85 @@
+.gen-container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.mesa-container {
+    padding: 15px;
+    overflow-x: auto;
+    width: 97%;
+}
+
+table {
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #dfc848;
+}
+
+button {
+    width: 40%;
+    margin: 5px;
+    padding: 5px;
+    border: solid black 1px;
+    border-radius: 5px;
+    min-width: 70px;
+}
+
+.cont-newTable {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.cont-newTable button {
+    background-color: rgba(0, 128, 0, 0.637);
+    margin-bottom: 20px;
+}
+.cont-newTable form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.cont-newTable form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .cont-newTable form input{
+    margin-bottom: 10px;
+    border: solid black 2px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  .cont-newTable select{
+    margin-bottom: 10px;
+    border: solid black 2px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+  
+  .cont-newTable form button {
+    background-color: rgb(240, 192, 60);
+    padding: 5px;
+    margin: 10px;
+    margin-top: 15px;
+    width: 15%;
+    font-weight: bolder;
+    border-radius: 15px;
+  }
