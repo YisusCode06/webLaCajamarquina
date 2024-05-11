@@ -56,6 +56,6 @@ router.get("/logout", logout);
 // Nuevas rutas para editar, eliminar y obtener información de usuario por ID
 router.put("/edituser/:id", editUserById);
 router.delete("/deleteuser/:id", deleteUserById);
-router.get("/getuser/:id", getUserById);
+router.get("/getuser", requireToken, getUserById);
 
 export default router;

@@ -20,6 +20,7 @@ const handleSubmit = async (event) => {
     if (response.status === 200) {
       const data = response.data;
       console.log(data);
+      localStorage.setItem('token',data.token);
       router.push('/dashboard');
     } else {
       console.error("Error al enviar la solicitud:", response.statusText);

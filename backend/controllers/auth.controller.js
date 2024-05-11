@@ -46,7 +46,7 @@ export const login = async (req, res) => {
 
     //Generar token JWT
     const { token, expiresIn } = generateToken(user._id);
-    generateRefreshToken(user._id, res);
+    //generateRefreshToken(user._id, res);
 
     return res.json({ ok: true, token: token, expiresIn: expiresIn });
   } catch (error) {
@@ -63,6 +63,7 @@ export const editUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
     }
+    
     return res.json({ ok: true, user });
   } catch (error) {
     console.log(error);
@@ -83,17 +84,17 @@ export const deleteUserById = async (req, res) => {
     return res.status(500).json({ error: "Error de servidor" });
   }
 };
-
+//este funciona pefecto por token
 export const getUserById = async (req, res) => {
-  const { id } = req.params;
+  const { uid } = req;
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(uid);
     if (!user) {
       return res.status(404).json({ ok: false, msg: "Usuario no encontrado" });
     }
     return res.json({ ok: true, user });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ error: "Error de servidor" });
   }
 };
@@ -124,6 +125,7 @@ export const refreshToken = (req, res) => {
   }
 };
 
+//en caso de cookies
 export const logout=(req, res)=>{
   res.clearCookie("refreshToken");
   return res.json({ok:true});
