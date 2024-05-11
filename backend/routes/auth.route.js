@@ -56,7 +56,7 @@ router.get("/logout", logout);
 
 // Nuevas rutas para editar, eliminar y obtener información de usuario por ID
 router.put("/edituser/:id", requireToken,editUserById);
-router.delete("/deleteuser/:id", deleteUserById);
+router.delete("/deleteuser/:id", refreshToken, deleteUserById);
 router.get("/getuser", requireToken, getUserById);
 router.get('/users', requireToken, getAllUsers);
 
