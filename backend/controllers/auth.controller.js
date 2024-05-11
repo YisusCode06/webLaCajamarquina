@@ -125,6 +125,17 @@ export const refreshToken = (req, res) => {
   }
 };
 
+//para todos los usuarios
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    return res.json({ ok: true, users });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Error de servidor" });
+  }
+};
+
 //en caso de cookies
 export const logout=(req, res)=>{
   res.clearCookie("refreshToken");

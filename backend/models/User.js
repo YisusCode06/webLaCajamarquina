@@ -18,20 +18,21 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: ["ADMIN", "USER"],
+    default:"ADMIN",
     required: true,
   },
   name: {
     type: String,
-    required: true,
+    //required: true,
   },
   dni: {
     type: String,
-    required: true,
+    //required: true,
     unique: true,
   },
   phone: {
     type: String,
-    required: true,
+    //required: true,
   },
 });
 

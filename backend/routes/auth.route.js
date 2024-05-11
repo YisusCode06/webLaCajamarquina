@@ -7,6 +7,7 @@ import {
   editUserById,
   deleteUserById,
   getUserById,
+  getAllUsers,
 } from "../controllers/auth.controller.js";
 import { body, param } from "express-validator";
 import { validationResultExpress } from "../middlewares/validationResultExpress.js";
@@ -54,8 +55,9 @@ router.get("/refresh", refreshToken);
 router.get("/logout", logout);
 
 // Nuevas rutas para editar, eliminar y obtener información de usuario por ID
-router.put("/edituser/:id", editUserById);
+router.put("/edituser/:id", requireToken,editUserById);
 router.delete("/deleteuser/:id", deleteUserById);
 router.get("/getuser", requireToken, getUserById);
+router.get('/users', requireToken, getAllUsers);
 
 export default router;

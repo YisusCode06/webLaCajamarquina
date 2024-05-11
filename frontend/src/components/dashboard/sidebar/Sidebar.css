@@ -10,6 +10,7 @@
   transition: all 0.5s;
   min-width: 82px;
   z-index: 2;
+  overflow-y: auto;
 }
 .collapsed {
   display: flex;
@@ -23,6 +24,7 @@
   transition: all 0.5s;
   min-width: 82px;
   z-index: 2;
+  overflow-y: auto;
 }
 .btn-control {
   position: absolute;
