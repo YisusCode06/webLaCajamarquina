@@ -116,8 +116,17 @@ const cancelNewUser = () => {
 };
 
 const saveNewUser = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error('No se ha encontrado un token de autenticación.');
+        return;
+    }
     try {
-        await axios.post('http://localhost:3000/api/v1/register', newUser.value);
+        await axios.post('http://localhost:3000/api/v1/register', newUser.value, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         users.value.push(newUser.value);
         // Limpiar el formulario
         newUser.value = {
@@ -138,8 +147,17 @@ const saveNewUser = async () => {
 onMounted(fetchUsers);
 
 const deleteUser = async (userId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error('No se ha encontrado un token de autenticación.');
+        return;
+    }
     try {
-        await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`);
+        await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         users.value = users.value.filter(user => user._id !== userId);
     } catch (error) {
         console.error('Error al eliminar el usuario:', error.message);
@@ -147,9 +165,18 @@ const deleteUser = async (userId) => {
 };
 
 const toggleUserRole = async (user) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error('No se ha encontrado un token de autenticación.');
+        return;
+    }
     const newRole = user.role === 'ADMIN' ? 'USER' : 'ADMIN';
     try {
-        await axios.put(`http://localhost:3000/api/v1/edituser/${user._id}`, { role: newRole });
+        await axios.put(`http://localhost:3000/api/v1/edituser/${user._id}`, { role: newRole }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         user.role = newRole;
     } catch (error) {
         console.error('Error al cambiar el rol del usuario:', error.message);

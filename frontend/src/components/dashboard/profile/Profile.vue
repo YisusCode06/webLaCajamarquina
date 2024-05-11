@@ -53,6 +53,11 @@ const enableEditMode = () => {
 
 const saveChanges = async () => {
   console.log('Guardando cambios...');
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('No se ha encontrado un token de autenticación.');
+    return;
+  }
   try {
     const dataToUpdate = {
       name: userData.value.name,
@@ -63,7 +68,11 @@ const saveChanges = async () => {
 
     const response = await axios.put(
       `http://localhost:3000/api/v1/edituser/${userData.value._id}`,
-      dataToUpdate
+      dataToUpdate, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
     );
     console.log(response.data);
     editMode.value = false;
@@ -97,8 +106,8 @@ onMounted(async () => {
   }
 });
 const logout = () => {
-  localStorage.removeItem('token'); 
-  window.location.href = '/'; 
+  localStorage.removeItem('token');
+  window.location.href = '/';
 };
 
 </script>
