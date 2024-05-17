@@ -18,6 +18,9 @@
                         <option value="ESPACIO2">Espacio 2</option>
                     </select>
 
+                    <!-- <label for="newIsOccupied">Ocupado:</label>
+                    <input type="checkbox" id="newIsOccupied" v-model="newTable.isOccupied"> -->
+
                     <div class="form-buttons">
                         <button type="submit">Guardar</button>
                         <button type="button" @click="cancelNewTable">Cancelar</button>
@@ -30,6 +33,7 @@
                         <th>Numero</th>
                         <th>Capacidad</th>
                         <th>Ubicacion</th>
+                        <th>Ocupado</th>
                         <th class="th-acciones">Acciones</th>
                     </tr>
                 </thead>
@@ -38,6 +42,7 @@
                         <td>{{ menu.number }}</td>
                         <td>{{ menu.capacity }}</td>
                         <td>{{ menu.location }}</td>
+                        <td>{{ menu.isOccupied ? 'Sí' : 'No' }}</td>
                         <td>
                             <button @click="editTable(menu)">Editar</button>
                             <button @click="deleteTable(menu._id)">Eliminar</button>
@@ -58,7 +63,8 @@ const showNewMesaForm = ref(false);
 const newTable = ref({
     number: '',
     capacity: '',
-    location: 'ESPACIO1'
+    location: 'ESPACIO1',
+    isOccupied: false
 });
 
 const fetchMesas = async () => {
@@ -78,7 +84,8 @@ const cancelNewTable = () => {
     newTable.value = {
         number: '',
         capacity: '',
-        location: 'ESPACIO1'
+        location: 'ESPACIO1',
+        isOccupied: false
     };
     showNewMesaForm.value = false;
 };
@@ -87,18 +94,18 @@ const saveNewMesa = async () => {
     try {
         if (!newTable.value._id) {
             // Crear nueva mesa
-            await axios.post('http://localhost:3000/api/v1/newtable', newTable.value);
-            mesas.value.push({ ...newTable.value });
+            const response = await axios.post('http://localhost:3000/api/v1/newtable', newTable.value);
+            mesas.value.push(response.data.table);
         } else {
             // Editar mesa existente
-            await axios.put(`http://localhost:3000/api/v1/updatetable/${newTable.value._id}`, newTable.value);
+            const response = await axios.put(`http://localhost:3000/api/v1/updatetable/${newTable.value._id}`, newTable.value);
             const index = mesas.value.findIndex(mesa => mesa._id === newTable.value._id);
             if (index !== -1) {
-                mesas.value[index] = { ...newTable.value };
+                mesas.value[index] = response.data.table;
             }
         }
 
-        newTable.value = { number: '', capacity: '', location: 'ESPACIO1' };
+        newTable.value = { number: '', capacity: '', location: 'ESPACIO1', isOccupied: false };
         showNewMesaForm.value = false;
     } catch (error) {
         console.error('Error al guardar la mesa:', error.message);

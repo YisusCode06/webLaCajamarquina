@@ -1,0 +1,84 @@
+.gen-container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.title {
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.cont-tables {
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.table-card {
+    background-color: rgba(235, 145, 28, 0.678);
+    border-radius: 15px;
+    padding: 15px;
+    width: calc(33.33% - 30px);
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.table-actions {
+    margin-top: 10px;
+}
+
+.table-actions button {
+    margin: 10px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(24, 223, 84, 0.644);
+    border: solid black 1px;
+    font-weight: bold;
+}
+
+.table-details {
+    text-align: center;
+}
+
+.btn-list-orders {
+    margin: 10px;
+    width: 20%;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(223, 195, 38, 0.801);
+    border: solid black 1px;
+    font-weight: bold;
+}
+.filter-container {
+    padding-top: 15px;
+    padding-left: 40px;
+    font-weight: 700;
+}
+.filter-container select{
+    padding: 5px;
+    border-radius: 10px;
+    background-color: bisque;
+    margin: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+    .table-card {
+        width: calc(50% - 30px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .table-card {
+        width: calc(100% - 30px);
+    }
+    .btn-list-orders{
+        width: 50%;
+    }
+}

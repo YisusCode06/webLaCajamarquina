@@ -2,9 +2,9 @@ import { Table } from "../models/Table.js";
 
 // Controlador para crear una nueva mesa
 export const createTable = async (req, res) => {
-  const { number, capacity, location } = req.body;
+  const { number, capacity, location, isOccupied } = req.body;
   try {
-    const newTable = new Table({ number, capacity, location });
+    const newTable = new Table({ number, capacity, location, isOccupied });
     await newTable.save();
     return res.status(201).json({ success: true, table: newTable });
   } catch (error) {
@@ -16,9 +16,13 @@ export const createTable = async (req, res) => {
 // Controlador para editar una mesa por su ID
 export const updateTableById = async (req, res) => {
   const { id } = req.params;
-  const { number, capacity, location } = req.body;
+  const { number, capacity, location, isOccupied } = req.body;
   try {
-    const updatedTable = await Table.findByIdAndUpdate(id, { number, capacity, location }, { new: true });
+    const updatedTable = await Table.findByIdAndUpdate(
+      id, 
+      { number, capacity, location, isOccupied },
+      { new: true }
+    );
     if (!updatedTable) {
       return res.status(404).json({ success: false, error: "Mesa no encontrada" });
     }

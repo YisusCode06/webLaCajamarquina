@@ -5,7 +5,7 @@ const tableSchema = new Schema({
     number: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
     capacity: {
         type: Number
@@ -14,8 +14,11 @@ const tableSchema = new Schema({
         type: String,
         enum: ["ESPACIO1", "ESPACIO2"],
         required: true
+    },
+    isOccupied: {
+        type: Boolean,
+        default: false
     }
+});
 
-})
-
-export const Table = model("table", tableSchema);
+export const Table = model("Table", tableSchema);

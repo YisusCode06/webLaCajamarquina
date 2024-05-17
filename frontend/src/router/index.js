@@ -7,6 +7,8 @@ import Menu from '@/components/dashboard/menu/Menu.vue'
 import Orders from '@/components/dashboard/orders/Orders.vue'
 import Reports from '@/components/dashboard/reports/Reports.vue'
 import Profile from '@/components/dashboard/profile/Profile.vue'
+import ListOrders from '@/components/dashboard/orders/list-orders/ListOrders.vue'
+import AsignOrder from '@/components/dashboard/orders/asign-order/AsignOrder.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,7 +36,7 @@ const router = createRouter({
           component: Tables,
         },
         {
-          path:'menu',
+          path: 'menu',
           component: Menu,
         },
         {
@@ -42,12 +44,21 @@ const router = createRouter({
           component: Orders,
         },
         {
-          path:'reports',
+          path: 'reports',
           component: Reports,
         },
         {
           path: 'profile',
           component: Profile,
+        },
+        {
+          path: 'list-orders',
+          component: ListOrders
+        },
+        {
+          path: 'asign-order/:number',
+          component: AsignOrder,
+          props: true
         }
       ]
     }
