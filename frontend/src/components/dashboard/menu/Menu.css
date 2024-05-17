@@ -3,28 +3,30 @@
     height: 100vh;
     overflow-y: auto;
 }
+
 .title {
     padding-top: 15px;
     padding-left: 30px;
 }
+
 .cont-menu {
     padding: 15px;
     display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-between; 
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .menu-card {
     background-color: rgba(222, 184, 135, 0.459);
     border-radius: 15px;
     padding: 15px;
-    width: calc(33.33% - 30px); 
+    width: calc(33.33% - 30px);
     margin: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .menu-image img {
@@ -38,6 +40,7 @@
 .menu-actions {
     margin-top: 10px;
 }
+
 .menu-actions button {
     margin: 10px;
     width: 100%;
@@ -46,12 +49,14 @@
     background-color: rgba(137, 43, 226, 0.356);
     border: solid black 1px;
 }
-.new-menu{
+
+.new-menu {
     display: flex;
     justify-content: end;
     margin-right: 30px;
 }
-.new-menu button{
+
+.new-menu button {
     border-radius: 10px;
     background-color: rgba(137, 43, 226, 0.356);
     border: solid black 1px;
@@ -59,14 +64,16 @@
     padding: 5px;
 }
 
-.new-menu-form{
+.new-menu-form {
     padding: 30px;
 }
-.new-menu-form form{
+
+.new-menu-form form {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .new-menu-form form label {
     margin-bottom: 5px;
     font-weight: bold;
@@ -96,16 +103,23 @@
     font-weight: bolder;
     border-radius: 15px;
 }
+
 .filter-container {
     padding-top: 15px;
     padding-left: 40px;
     font-weight: 700;
 }
-.filter-container select{
+
+.filter-container select {
     padding: 5px;
     border-radius: 10px;
     background-color: bisque;
     margin: 5px;
+}
+
+.menu-details {
+
+    text-align: center;
 }
 
 @media screen and (max-width: 1200px) {

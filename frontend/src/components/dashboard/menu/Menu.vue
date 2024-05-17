@@ -39,7 +39,7 @@
                 <div class="menu-details">
                     <h3>{{ menuItem.name }}</h3>
                     <p>Categoría: {{ menuItem.category }}</p>
-                    <p>Precio: {{ menuItem.price }}</p>
+                    <p>Precio: S/ {{ menuItem.price }}</p>
                 </div>
                 <div class="menu-image">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-MEkyTaPGun0hSPmtBo9JygJspXETz8Li8A&usqp=CAU" alt="Imagen del plato">
