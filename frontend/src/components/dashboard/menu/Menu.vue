@@ -6,7 +6,13 @@
         <div class="new-menu">
             <button @click="toggleNewMenuForm">Nuevo Menú</button>
         </div>
-        <!-- Formulario para crear un nuevo menú -->
+        <div class="filter-container">
+            <label for="categoryFilter">Filtrar por Categoría:</label>
+            <select id="categoryFilter" v-model="selectedCategory">
+                <option value="ALL">Todas</option>
+                <option v-for="menuCat in uniqueCategories" :key="menuCat" :value="menuCat">{{ menuCat }}</option>
+            </select>
+        </div>
         <div class="new-menu-form" v-if="showNewMenuForm">
             <h2>Nuevo Menú</h2>
             <form @submit.prevent="editingMenu ? saveEditedMenu() : saveNewMenu()">
@@ -29,7 +35,7 @@
             </form>
         </div>
         <div class="cont-menu">
-            <div v-for="menuItem in menuItems" :key="menuItem._id" class="menu-card">
+            <div v-for="menuItem in filteredMenuItems" :key="menuItem._id" class="menu-card">
                 <div class="menu-details">
                     <h3>{{ menuItem.name }}</h3>
                     <p>Categoría: {{ menuItem.category }}</p>
@@ -47,6 +53,7 @@
     </div>
 </template>
 
+
 <script setup>
 import { ref, computed } from 'vue';
 import axios from 'axios';
@@ -54,6 +61,8 @@ import axios from 'axios';
 const menuItems = ref([]);
 const showNewMenuForm = ref(false);
 const editingMenu = ref(false);
+
+const selectedCategory = ref('ALL');
 
 const newMenuItem = ref({
     name: '',
@@ -188,6 +197,18 @@ const updateDescription = (event) => {
         newMenuItem.value.description = event.target.value;
     }
 };
+const uniqueCategories = computed(() => {
+    const categories = menuItems.value.map(item => item.category);
+    return [...new Set(categories)];
+});
+
+const filteredMenuItems = computed(() => {
+    if (selectedCategory.value === 'ALL') {
+        return menuItems.value;
+    } else {
+        return menuItems.value.filter(item => item.category === selectedCategory.value);
+    }
+});
 
 fetchMenus();
 </script>

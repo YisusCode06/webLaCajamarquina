@@ -96,6 +96,17 @@
     font-weight: bolder;
     border-radius: 15px;
 }
+.filter-container {
+    padding-top: 15px;
+    padding-left: 40px;
+    font-weight: 700;
+}
+.filter-container select{
+    padding: 5px;
+    border-radius: 10px;
+    background-color: bisque;
+    margin: 5px;
+}
 
 @media screen and (max-width: 1200px) {
     .menu-card {
