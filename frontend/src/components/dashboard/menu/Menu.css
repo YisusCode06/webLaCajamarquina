@@ -92,6 +92,12 @@
     padding: 5px;
     border-radius: 10px;
 }
+.new-menu-form select{
+    margin-bottom: 10px;
+    border: solid black 2px;
+    padding: 5px;
+    border-radius: 10px;
+}
 
 .new-menu-form form button {
     background-color: rgb(240, 192, 60);
@@ -121,7 +127,13 @@
 
     text-align: center;
 }
+.available {
+    color: green;
+}
 
+.unavailable {
+    color: red;
+}
 @media screen and (max-width: 1200px) {
     .menu-card {
         width: calc(50% - 30px);

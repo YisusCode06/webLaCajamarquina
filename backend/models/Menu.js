@@ -17,6 +17,11 @@ const menuSchema = new Schema({
     price: {
         type: Number,
         required: true
+    },
+    availability: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 });
 

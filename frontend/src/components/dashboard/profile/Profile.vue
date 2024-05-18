@@ -5,7 +5,7 @@
         <button @click="logout">Cerrar Sesión</button>
       </div>
       <h1>Perfil Usuario</h1>
-      <form @submit.prevent="saveChanges">
+      <form @submit.prevent="confirmSaveChanges">
         <label for="name">Nombre:</label>
         <input type="text" name="name" id="name" v-model="userData.name" :disabled="!editMode">
 
@@ -35,6 +35,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const editMode = ref(false);
 const userData = ref({
@@ -49,6 +50,22 @@ const userData = ref({
 
 const enableEditMode = () => {
   editMode.value = true;
+};
+
+const confirmSaveChanges = () => {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¡No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, guardar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      saveChanges();
+    }
+  });
 };
 
 const saveChanges = async () => {
@@ -76,8 +93,18 @@ const saveChanges = async () => {
     );
     console.log(response.data);
     editMode.value = false;
+    Swal.fire(
+      'Guardado!',
+      'Tus cambios han sido guardados.',
+      'success'
+    );
   } catch (error) {
     console.error('Error al guardar los cambios:', error.message);
+    Swal.fire(
+      'Error!',
+      'Hubo un problema al guardar los cambios.',
+      'error'
+    );
   }
 };
 
@@ -100,11 +127,12 @@ onMounted(async () => {
     });
     const { name, dni, phone, email, password, role, _id } = response.data.user;
     userData.value = { name, dni, phone, email, password, role, _id };
-    console.log(userData.value)
+    console.log(userData.value);
   } catch (error) {
     console.error('Error al obtener los datos del perfil:', error.message);
   }
 });
+
 const logout = () => {
   localStorage.removeItem('token');
   window.location.href = '/';
