@@ -1,0 +1,15 @@
+.gen-container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.title {
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.cont-new-order {
+    padding-top: 15px;
+    padding-left: 30px;
+}

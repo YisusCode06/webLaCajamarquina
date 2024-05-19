@@ -1,5 +1,5 @@
 import express from 'express';
-import { createMenu, editMenuById, deleteMenuById, getMenuById, getAllMenus } from '../controllers/menu.controller.js';
+import { createMenu, editMenuById, deleteMenuById, getMenuById, getAllMenus, getMenuByName } from '../controllers/menu.controller.js';
 
 const routerMenu = express.Router();
 
@@ -17,5 +17,8 @@ routerMenu.get('/getmenu/:id', getMenuById);
 
 // Ruta para obtener todos los menús
 routerMenu.get('/getmenus', getAllMenus);
+
+// Ruta para obtener un menú por su nombre
+routerMenu.get('/getmenubyname/:name', getMenuByName);
 
 export default routerMenu;

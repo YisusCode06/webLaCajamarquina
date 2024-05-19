@@ -6,6 +6,7 @@ import "./database/connectbd.js";
 import authRoute from "./routes/auth.route.js";
 import routerTable from "./routes/table.route.js";
 import routerMenu from "./routes/menu.route.js";
+import routerOrder from "./routes/order.route.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -21,7 +22,8 @@ app.use(cors());
 //lamar rutas
 app.use("/api/v1/", authRoute);
 app.use('/api/v1/', routerTable);
-app.use("/api/v1/", routerMenu)
+app.use("/api/v1/", routerMenu);
+app.use('/api/v1/', routerOrder)
 
 app.listen(PORT, () => {
   console.log("Running: " + PORT);

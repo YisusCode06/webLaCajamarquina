@@ -69,3 +69,19 @@ export const getAllMenus = async (req, res) => {
         return res.status(500).json({ success: false, error: 'Error de servidor' });
     }
 };
+
+// Controlador para buscar menús por nombre
+export const getMenuByName = async (req, res) => {
+    const { name } = req.params;
+    try {
+        // Utiliza una expresión regular para hacer la búsqueda insensible a mayúsculas y minúsculas
+        const menus = await Menu.find({ name: { $regex: new RegExp(`^${name}`, 'i') } });
+        if (!menus || menus.length === 0) {
+            return res.status(404).json({ success: false, message: 'Ningún menú encontrado' });
+        }
+        return res.status(200).json({ success: true, menus });
+    } catch (error) {
+        console.error('Error al obtener los menús por nombre:', error);
+        return res.status(500).json({ success: false, error: 'Error de servidor' });
+    }
+};
