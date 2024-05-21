@@ -1,3 +1,62 @@
+<script setup>
+import { ref, watch, computed } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const number = ref(route.params.number);
+
+// Estados para los inputs y resultados de búsqueda
+const clientName = ref('');
+const menuName = ref('');
+const searchResults = ref([]);
+const selectedMenus = ref([]);
+
+// Función para realizar la búsqueda del menú
+const searchMenu = async () => {
+    if (menuName.value.trim() === '') {
+        searchResults.value = [];
+        return;
+    }
+
+    try {
+        const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
+        searchResults.value = response.data.menus;
+    } catch (error) {
+        console.error('Error al buscar el menú:', error.message);
+    }
+};
+
+// Ver el cambio en el valor de menuName
+watch(menuName, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+        searchMenu();
+    }
+});
+
+// Función para manejar la selección de un menú
+const selectMenu = (menu) => {
+    selectedMenus.value.push({ ...menu, quantity: 1, specialInstructions: '' });
+    searchResults.value = [];
+    menuName.value = '';
+};
+
+// Función para quitar un menú de la tabla
+const removeMenu = (index) => {
+    selectedMenus.value.splice(index, 1);
+};
+
+// Función para calcular el subtotal de un menú
+const calculateSubtotal = (menu) => {
+    return menu.price * menu.quantity;
+};
+
+// Computed para calcular el total del pedido
+const total = computed(() => {
+    return selectedMenus.value.reduce((acc, menu) => acc + calculateSubtotal(menu), 0);
+});
+</script>
+
 <template>
     <div class="gen-container">
         <div class="title">
@@ -9,14 +68,14 @@
                 <input type="text" v-model.trim="clientName" id="clientName">
 
                 <label for="menuName">Buscar Menú por Nombre:</label>
-                <input type="text" v-model.trim="menuName" id="menuName" @input="searchMenu" placeholder="Ingrese nombre de menú">
+                <input type="text" v-model.trim="menuName" id="menuName" placeholder="Ingrese nombre de menú">
 
-                <!-- Aquí mostraremos los resultados de la búsqueda -->
-                <ul v-if="searchResults.length > 0">
+                <ul v-if="searchResults.length > 0" class="menu-list">
+                    <p>Seleciona una opcion para agregar:</p>
                     <li v-for="menu in searchResults" :key="menu.id" @click="selectMenu(menu)">{{ menu.name }}</li>
                 </ul>
 
-                <table v-if="selectedMenu">
+                <table v-if="selectedMenus.length > 0">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -28,67 +87,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ selectedMenu.name }}</td>
-                            <td>{{ selectedMenu.price }}</td>
-                            <td><input type="number" v-model.number="quantity" min="1" max="10"></td>
-                            <td>{{ selectedMenu.price * quantity }}</td>
-                            <td><input type="text" v-model.trim="specialInstructions"></td>
-                            <td><button @click.prevent="quitar">Quitar de la tabla</button></td>
+                        <tr v-for="(menu, index) in selectedMenus" :key="menu.id">
+                            <td>{{ menu.name }}</td>
+                            <td>{{ menu.price }}</td>
+                            <td><input type="number" v-model.number="menu.quantity" min="1" max="10"></td>
+                            <td>{{ calculateSubtotal(menu) }}</td>
+                            <td><input type="text" v-model.trim="menu.specialInstructions"></td>
+                            <td><button @click.prevent="removeMenu(index)">Quitar</button></td>
                         </tr>
                     </tbody>
                 </table>
+                <h3>Total pedido: S/.{{ total }}</h3>
+                <div class="cont-btn">
+                    <button>
+                        Asignar Pedido
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-
-const clientName = ref('');
-const menuName = ref('');
-const selectedMenu = ref(null);
-const quantity = ref(1);
-const specialInstructions = ref('');
-const searchResults = ref([]);
-const number = ref(0); // Debes definir este valor en tu componente
-
-const searchMenu = async () => {
-    try {
-        const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
-        if (response.data.success && response.data.menu) {
-            // Guardamos los resultados de la búsqueda
-            searchResults.value = [response.data.menu];
-        } else {
-            // Si no se encuentra ningún menú, limpiamos los resultados de la búsqueda
-            searchResults.value = [];
-            console.error('Menú no encontrado');
-        }
-    } catch (error) {
-        console.error('Error al buscar el menú:', error);
-    }
-};
-
-const selectMenu = (menu) => {
-    // Al hacer clic en un resultado de búsqueda, seleccionamos ese menú
-    selectedMenu.value = menu;
-};
-
-const quitar = () => {
-    if (selectedMenu.value) {
-        // Limpiamos el menú seleccionado
-        selectedMenu.value = null;
-        // Restablecemos la cantidad a 1
-        quantity.value = 1;
-        // Limpiamos las instrucciones especiales
-        specialInstructions.value = '';
-    } else {
-        console.error('Ningún menú seleccionado');
-    }
-};
-</script>
 
 <style scoped>
 @import url('./AsignOrder.css');
