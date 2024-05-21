@@ -51,7 +51,7 @@ const filteredMesas = computed(() => {
                     <p>{{ mesa.isOccupied ? 'Ocupado' : 'Desocupado' }}</p>
                 </div>
                 <div class="table-actions">
-                    <router-link :to="`asign-order/${mesa.number}`">
+                    <router-link :to="`asign-order/${mesa._id}`">
                         <button :disabled="mesa.isOccupied">
                         Asignar Pedido
                     </button>
