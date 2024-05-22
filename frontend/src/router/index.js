@@ -9,6 +9,7 @@ import Reports from '@/components/dashboard/reports/Reports.vue'
 import Profile from '@/components/dashboard/profile/Profile.vue'
 import ListOrders from '@/components/dashboard/orders/list-orders/ListOrders.vue'
 import AsignOrder from '@/components/dashboard/orders/asign-order/AsignOrder.vue'
+import EditOrder from '@/components/dashboard/orders/edit-order/EditOrder.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
         {
           path: 'asign-order/:number',
           component: AsignOrder,
+          props: true
+        },
+        {
+          path: 'edit-order/:_id',
+          component: EditOrder,
           props: true
         }
       ]

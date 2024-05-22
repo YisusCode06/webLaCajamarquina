@@ -59,7 +59,7 @@ td:first-child {
     z-index: 1;
 }
 
-button {
+button, select {
     width: 40%;
     margin: 5px;
     padding: 5px;
