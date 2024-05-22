@@ -1,0 +1,69 @@
+.gen-container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.title {
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.cont-list-order {
+    padding-top: 15px;
+    padding-left: 30px;
+    width: 96%;
+
+}
+
+.table-container {
+    max-height: 89vh;
+    overflow-y: auto;
+    border: solid black 1px;
+}
+
+table {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #df9b35;
+}
+
+th:first-child {
+    left: 0;
+    z-index: 2;
+}
+
+td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: rgb(138, 207, 207);
+    z-index: 1;
+}
+
+button {
+    width: 40%;
+    margin: 5px;
+    padding: 5px;
+    border: solid black 1px;
+    border-radius: 5px;
+    min-width: 70px;
+}
