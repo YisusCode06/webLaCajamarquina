@@ -169,7 +169,7 @@ onMounted(() => {
                                 </ul>
                             </td>
                             <td>
-                                <p v-for="item in order.items" :key="item._id">{{ item.specialInstructions }}</p>
+                                <p v-for="item in order.items" :key="item._id">✔️{{ item.specialInstructions }}</p>
                             </td>
                             <td>S/. {{ order.total }}</td>
                             <td>{{ order.status }}</td>
