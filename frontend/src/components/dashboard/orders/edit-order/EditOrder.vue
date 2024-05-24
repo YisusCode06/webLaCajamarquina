@@ -98,11 +98,17 @@ const calculateTotal = () => {
 };
 
 const selectMenu = (menu) => {
-    const existingMenu = selectedMenus.value.find(item => item.id === menu.id);
+    const existingMenu = selectedMenus.value.find(item => item.id === menu._id);
     if (existingMenu) {
         existingMenu.quantity++;
     } else {
-        selectedMenus.value.push({ ...menu, quantity: 1, specialInstructions: '' });
+        selectedMenus.value.push({ 
+            id: menu._id, 
+            name: menu.name, 
+            price: menu.price, 
+            quantity: 1, 
+            specialInstructions: '' 
+        });
     }
     calculateTotal();
 };
@@ -155,7 +161,7 @@ const saveOrder = async () => {
             clientName: clientName.value,
             table: tableNumber.value,
             items: selectedMenus.value.map(menu => ({
-                menu: menu.id, // Corrección aquí
+                menu: menu.id,
                 quantity: menu.quantity,
                 subtotal: calculateSubtotal(menu),
                 specialInstructions: menu.specialInstructions
@@ -225,7 +231,7 @@ onMounted(() => {
                     </tbody>
                 </table>
                 <h3>Total pedido: S/.{{ total }}</h3>
-                <div>
+                <!-- <div>
                     <label for="orderStatus">Estado del Pedido:</label>
                     <select v-model="orderStatus" id="orderStatus">
                         <option value="POR ATENDER">POR ATENDER</option>
@@ -252,7 +258,7 @@ onMounted(() => {
                 <div>
                     <label for="date">Fecha:</label>
                     <input type="datetime-local" v-model="date" id="date">
-                </div>
+                </div> -->
                 <div class="buttons">
                     <button type="submit">Guardar Pedido</button>
                     <button @click.prevent="confirmCancel">Cancelar</button>

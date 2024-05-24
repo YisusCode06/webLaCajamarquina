@@ -88,7 +88,7 @@ const markOrderAsPaid = async (orderId, tableId) => {
     }
 };
 
-const deleteOrder = async (orderId) => {
+const deleteOrder = async (orderId, tableId) => {
     try {
         await Swal.fire({
             title: '¿Estás seguro?',
@@ -102,6 +102,7 @@ const deleteOrder = async (orderId) => {
             if (result.isConfirmed) {
                 await axios.delete(`http://localhost:3000/api/v1/deleteorder/${orderId}`);
                 orders.value = orders.value.filter(order => order._id !== orderId);
+                await axios.put(`http://localhost:3000/api/v1/updatetable/${tableId}`, { isOccupied: false });
                 Swal.fire('Eliminado!', 'El pedido ha sido eliminado.', 'success');
             }
         });
@@ -157,7 +158,7 @@ onMounted(() => {
                                     <button>Editar</button>
                                 </router-link>
                                 <button v-if="order.status != 'ATENDIDA'"
-                                    @click="deleteOrder(order._id)">Eliminar</button>
+                                    @click="deleteOrder(order._id, order.table)">Eliminar</button>
                             </td>
                             <td>{{ order.clientName }}</td>
                             <td>{{ tables[order.table] ? tables[order.table].number : 'Mesa no encontrada' }}</td>
