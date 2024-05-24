@@ -49,7 +49,7 @@ const searchMenu = async () => {
 
     try {
         const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
-        searchResults.value = response.data.menus;
+        searchResults.value = response.data.menus.filter(menu => menu.availability);
     } catch (error) {
         console.error('Error al buscar el menú:', error.message);
         Swal.fire('Error!', 'Hubo un problema al buscar el menú.', 'error');
@@ -65,10 +65,18 @@ watch(menuName, (newVal, oldVal) => {
 
 // Función para manejar la selección de un menú
 const selectMenu = (menu) => {
-    selectedMenus.value.push({ ...menu, quantity: 1, specialInstructions: '' });
+    const existingMenuIndex = selectedMenus.value.findIndex(item => item._id === menu._id);
+    if (existingMenuIndex !== -1) {
+        // Si el menú ya está en la lista, aumenta la cantidad
+        selectedMenus.value[existingMenuIndex].quantity++;
+    } else {
+        // Si el menú no está en la lista, agrégalo con cantidad 1
+        selectedMenus.value.push({ ...menu, quantity: 1, specialInstructions: '' });
+    }
     searchResults.value = [];
     menuName.value = '';
 };
+
 
 // Función para quitar un menú de la tabla
 const removeMenu = (index) => {

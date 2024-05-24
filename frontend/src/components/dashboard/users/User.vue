@@ -153,6 +153,14 @@ const deleteUser = async (userId) => {
         return;
     }
     try {
+        const userToDelete = users.value.find(user => user._id === userId);
+        if (userToDelete.role === 'ADMIN') {
+            const adminCount = users.value.filter(user => user.role === 'ADMIN').length;
+            if (adminCount === 1) {
+                alert('No se puede eliminar el último administrador.');
+                return;
+            }
+        }
         await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -163,6 +171,7 @@ const deleteUser = async (userId) => {
         console.error('Error al eliminar el usuario:', error.message);
     }
 };
+
 
 const toggleUserRole = async (user) => {
     const token = localStorage.getItem('token');

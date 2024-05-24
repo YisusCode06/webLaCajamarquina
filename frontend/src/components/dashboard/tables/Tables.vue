@@ -47,7 +47,7 @@
             <td>{{ menu.isOccupied ? 'Sí' : 'No' }}</td>
             <td>
               <button @click="editTable(menu)">Editar</button>
-              <button @click="confirmDeleteTable(menu._id)">Eliminar</button>
+              <button disabled @click="confirmDeleteTable(menu._id)">Eliminar</button>
             </td>
           </tr>
         </tbody>

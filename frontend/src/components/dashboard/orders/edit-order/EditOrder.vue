@@ -126,7 +126,7 @@ const searchMenu = async () => {
 
     try {
         const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
-        searchResults.value = response.data.menus;
+        searchResults.value = response.data.menus.filter(menu => menu.availability);
     } catch (error) {
         console.error('Error al buscar el menú:', error.message);
         Swal.fire('Error', 'Hubo un problema al buscar el menú.', 'error');

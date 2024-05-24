@@ -54,7 +54,7 @@
                 </div>
                 <div class="menu-actions">
                     <button @click="editMenuItem(menuItem)">Editar</button>
-                    <button @click="confirmDeleteMenuItem(menuItem._id)">Eliminar</button>
+                    <button disabled @click="confirmDeleteMenuItem(menuItem._id)">Eliminar</button>
                 </div>
             </div>
         </div>

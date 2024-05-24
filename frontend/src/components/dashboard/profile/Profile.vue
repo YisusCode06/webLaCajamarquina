@@ -2,7 +2,7 @@
   <div class="gen-container">
     <div class="cont-profile">
       <div class="cont-close">
-        <button @click="logout">Cerrar Sesión</button>
+        <button @click="confirmLogout">Cerrar Sesión</button>
       </div>
       <h1>Perfil Usuario</h1>
       <form @submit.prevent="confirmSaveChanges">
@@ -133,11 +133,26 @@ onMounted(async () => {
   }
 });
 
+const confirmLogout = () => {
+  Swal.fire({
+    title: '¿Estás seguro de cerrar sesión?',
+    text: "¡Tu sesión actual se cerrará!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, cerrar sesión'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      logout();
+    }
+  });
+};
+
 const logout = () => {
   localStorage.removeItem('token');
   window.location.href = '/';
 };
-
 </script>
 
 <style scoped>
