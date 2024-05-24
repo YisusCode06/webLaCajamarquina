@@ -68,6 +68,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const users = ref([]);
 const showNewUserForm = ref(false);
@@ -157,16 +158,35 @@ const deleteUser = async (userId) => {
         if (userToDelete.role === 'ADMIN') {
             const adminCount = users.value.filter(user => user.role === 'ADMIN').length;
             if (adminCount === 1) {
-                alert('No se puede eliminar el último administrador.');
+                Swal.fire({
+                    title: 'No se puede eliminar el último administrador.',
+                    icon: 'error'
+                });
                 return;
             }
         }
-        await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        // Mostrar alerta de confirmación
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // Si se confirma la eliminación, proceder
+                await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                users.value = users.value.filter(user => user._id !== userId);
+                Swal.fire('Eliminado!', 'El usuario ha sido eliminado.', 'success');
             }
         });
-        users.value = users.value.filter(user => user._id !== userId);
     } catch (error) {
         console.error('Error al eliminar el usuario:', error.message);
     }
@@ -180,16 +200,33 @@ const toggleUserRole = async (user) => {
         return;
     }
     const newRole = user.role === 'ADMIN' ? 'USER' : 'ADMIN';
-    try {
-        await axios.put(`http://localhost:3000/api/v1/edituser/${user._id}`, { role: newRole }, {
-            headers: {
-                Authorization: `Bearer ${token}`
+    // Mostrar alerta de confirmación
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Deseas cambiar el rol de ${user.name} a ${newRole === 'ADMIN' ? 'Administrador' : 'Usuario'}.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cambiar',
+        cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            // Si se confirma el cambio de rol, proceder
+            try {
+                await axios.put(`http://localhost:3000/api/v1/edituser/${user._id}`, { role: newRole }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                user.role = newRole;
+                Swal.fire('Cambiado!', 'El rol del usuario ha sido actualizado.', 'success');
+            } catch (error) {
+                console.error('Error al cambiar el rol del usuario:', error.message);
+                Swal.fire('Error!', 'Hubo un problema al cambiar el rol del usuario.', 'error');
             }
-        });
-        user.role = newRole;
-    } catch (error) {
-        console.error('Error al cambiar el rol del usuario:', error.message);
-    }
+        }
+    });
 };
 </script>
 
