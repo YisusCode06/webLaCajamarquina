@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+
+</script>
 <template>
     <div class="gen-container">
     <div class="content-dashboard">
