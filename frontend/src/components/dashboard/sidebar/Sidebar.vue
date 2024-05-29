@@ -57,14 +57,14 @@ onMounted(async () => {
           <span>Pedidos</span>
         </router-link>
         <router-link to="/dashboard/reports" :class="[menuOpen ? 'option-container' : 'option-container-collapsed']">
-          <ion-icon name="server-outline"></ion-icon>
+          <ion-icon name="document-outline"></ion-icon>
           <span>Reportes</span>
         </router-link>
       </div>
     </div>
     <router-link to="/dashboard/profile">
       <div :class="[menuOpen ? 'content-perfil' : 'content-perfil-collapsed']">
-        <img src="https://pics.filmaffinity.com/brad_pitt-180902992984558-nm_large.jpg" alt="" />
+        <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="" />
         <p>{{ userData ? userData.name : '' }}</p>
       </div>
     </router-link>

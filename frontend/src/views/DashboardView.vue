@@ -26,6 +26,7 @@ onMounted(() => {
   display: flex;
   min-height: 100vh;
   background-color: #e3e9f7;
+  min-width: 320px;
 }
 .content-dashboard {
   display: flex;
