@@ -1,4 +1,42 @@
 <script setup>
+import {ref, onMounted} from 'vue';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
+const orders = ref([]);
+const users = ref({});
+
+const loadOrders = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/api/v1/getorders');
+        orders.value = response.data.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } catch (error) {
+        console.error('Error al cargar los pedidos:', error.message);
+        Swal.fire('Error', 'Error al cargar los pedidos', 'error');
+    }
+};
+const loadUsers = async () => {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await axios.get('http://localhost:3000/api/v1/users', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        response.data.users.forEach(user => {
+            users.value[user._id] = user;
+        });
+        console.log(users.value);
+    } catch (error) {
+        console.error('Error al cargar los Usuarios:', error.message);
+        Swal.fire('Error', 'Error al cargar usuarios...', 'error');
+    }
+};
+
+onMounted(() => {
+    loadOrders();
+    loadUsers();
+});
 
 </script>
 
@@ -24,7 +62,7 @@
         <div class="control2">
           <label for="user-select">Pedidos por usuario:</label>
           <select name="user-select" id="user-select">
-            <option v-for="i in 10" :value="i">user {{ i }}</option>
+            <option v-for="user in users" :value="user"> {{ user.name }}</option>
           </select>
         </div>
       </div>

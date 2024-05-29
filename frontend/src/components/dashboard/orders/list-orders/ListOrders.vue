@@ -118,6 +118,7 @@ onMounted(() => {
     loadUsers();
     loadMenus();
 });
+
 </script>
 
 <template>
