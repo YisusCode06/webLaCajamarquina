@@ -65,6 +65,7 @@
 import { ref, computed } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const menuItems = ref([]);
 const showNewMenuForm = ref(false);
@@ -118,7 +119,7 @@ const resetFormValues = () => {
 
 const fetchMenus = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getmenus');
+        const response = await axios.get(`${apiUrl}getmenus`);
         menuItems.value = response.data.menus;
     } catch (error) {
         console.error('Error al obtener la lista de menús:', error.message);
@@ -143,7 +144,7 @@ const confirmSaveMenu = () => {
 
 const saveNewMenu = async () => {
     try {
-        await axios.post('http://localhost:3000/api/v1/newmenu', newMenuItem.value);
+        await axios.post('`${apiUrl}newmenu', newMenuItem.value);
         fetchMenus();
         resetFormValues();
         showNewMenuForm.value = false;
@@ -156,7 +157,7 @@ const saveNewMenu = async () => {
 
 const saveEditedMenu = async () => {
     try {
-        await axios.put(`http://localhost:3000/api/v1/updatemenu/${editedMenuItem.value._id}`, editedMenuItem.value);
+        await axios.put(`${apiUrl}updatemenu/${editedMenuItem.value._id}`, editedMenuItem.value);
         fetchMenus();
         resetFormValues();
         showNewMenuForm.value = false;
@@ -191,7 +192,7 @@ const confirmDeleteMenuItem = (menuId) => {
 
 const deleteMenuItem = async (menuId) => {
     try {
-        await axios.delete(`http://localhost:3000/api/v1/deletemenu/${menuId}`);
+        await axios.delete(`${apiUrl}deletemenu/${menuId}`);
         menuItems.value = menuItems.value.filter(menuItem => menuItem._id !== menuId);
         Swal.fire('Eliminado!', 'El menú ha sido eliminado.', 'success');
     } catch (error) {

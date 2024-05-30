@@ -1,5 +1,6 @@
 <script setup>
 import axios from 'axios';
+import {apiUrl} from '@/utils/api.js'
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -15,7 +16,7 @@ const handleSubmit = async (event) => {
   console.log(formData);
 
   try {
-    const response = await axios.post("http://localhost:3000/api/v1/login", formData);
+    const response = await axios.post(`${apiUrl}login`, formData);
 
     if (response.status === 200) {
       const data = response.data;

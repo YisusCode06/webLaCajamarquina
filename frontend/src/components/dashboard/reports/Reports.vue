@@ -2,6 +2,7 @@
 import { ref, watch, onMounted, computed } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 import { Pie, Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import * as XLSX from 'xlsx';
@@ -18,7 +19,7 @@ const selectedUserId = ref(null);
 
 const loadOrders = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/getorders');
+    const response = await axios.get(`${apiUrl}getorders`);
     orders.value = response.data.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
     filterOrders();
   } catch (error) {
@@ -30,7 +31,7 @@ const loadOrders = async () => {
 const loadUsers = async () => {
   const token = localStorage.getItem('token');
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/users', {
+    const response = await axios.get(`${apiUrl}users`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -47,7 +48,7 @@ const loadUsers = async () => {
 
 const loadMenus = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/getmenus');
+    const response = await axios.get(`${apiUrl}getmenus`);
     response.data.menus.forEach(menu => {
       menus.value[menu._id] = menu;
     });

@@ -1,6 +1,8 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import {apiUrl} from '@/utils/api.js'
+
 const userData = ref(null);
 const menuOpen = ref(false)
 const toggleMenu = () => {
@@ -14,7 +16,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/getuser', {
+    const response = await axios.get(`${apiUrl}getuser`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

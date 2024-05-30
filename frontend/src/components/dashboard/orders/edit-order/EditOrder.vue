@@ -3,6 +3,7 @@ import { ref, onMounted, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -25,7 +26,7 @@ const menus = ref({});
 
 const loadTables = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getables');
+        const response = await axios.get(`${apiUrl}getables`);
         response.data.tables.forEach(table => {
             tables.value[table._id] = table;
         });
@@ -37,7 +38,7 @@ const loadTables = async () => {
 
 const loadMenus = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getmenus');
+        const response = await axios.get(`${apiUrl}getmenus`);
         response.data.menus.forEach(menu => {
             menus.value[menu._id] = menu;
         });
@@ -50,7 +51,7 @@ const loadMenus = async () => {
 const loadUsers = async () => {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/users', {
+        const response = await axios.get(`${apiUrl}users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -66,7 +67,7 @@ const loadUsers = async () => {
 
 const loadOrder = async () => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/v1/getorder/${_id}`);
+        const response = await axios.get(`${apiUrl}getorder/${_id}`);
         const order = response.data.order;
         clientName.value = order.clientName;
         selectedMenus.value = order.items.map(item => ({
@@ -125,7 +126,7 @@ const searchMenu = async () => {
     }
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
+        const response = await axios.get(`${apiUrl}getmenubyname/${menuName.value}`);
         searchResults.value = response.data.menus.filter(menu => menu.availability);
     } catch (error) {
         console.error('Error al buscar el menú:', error.message);
@@ -172,7 +173,7 @@ const saveOrder = async () => {
             attendedBy: attendedBy.value,
             date: date.value
         };
-        await axios.put(`http://localhost:3000/api/v1/updateorder/${_id}`, updatedOrder);
+        await axios.put(`${apiUrl}updateorder/${_id}`, updatedOrder);
         Swal.fire('Éxito', 'Pedido actualizado correctamente', 'success');
         router.push('/dashboard/orders');
     } catch (error) {

@@ -36,6 +36,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const editMode = ref(false);
 const userData = ref({
@@ -84,7 +85,7 @@ const saveChanges = async () => {
     };
 
     const response = await axios.put(
-      `http://localhost:3000/api/v1/edituser/${userData.value._id}`,
+      `${apiUrl}edituser/${userData.value._id}`,
       dataToUpdate, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -120,7 +121,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/getuser', {
+    const response = await axios.get(`${apiUrl}getuser`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

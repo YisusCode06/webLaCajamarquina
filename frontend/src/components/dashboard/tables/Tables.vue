@@ -61,6 +61,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const mesas = ref([]);
 const showNewMesaForm = ref(false);
@@ -73,7 +74,7 @@ const newTable = ref({
 
 const fetchMesas = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/v1/getables');
+    const response = await axios.get(`${apiUrl}getables`);
     mesas.value = response.data.tables;
   } catch (error) {
     console.error('Error al obtener la lista de mesas:', error.message);
@@ -113,10 +114,10 @@ const confirmSaveNewMesa = () => {
 const saveNewMesa = async () => {
   try {
     if (!newTable.value._id) {
-      const response = await axios.post('http://localhost:3000/api/v1/newtable', newTable.value);
+      const response = await axios.post(`${apiUrl}newtable`, newTable.value);
       mesas.value.push(response.data.table);
     } else {
-      const response = await axios.put(`http://localhost:3000/api/v1/updatetable/${newTable.value._id}`, newTable.value);
+      const response = await axios.put(`${apiUrl}updatetable/${newTable.value._id}`, newTable.value);
       const index = mesas.value.findIndex(mesa => mesa._id === newTable.value._id);
       if (index !== -1) {
         mesas.value[index] = response.data.table;
@@ -163,7 +164,7 @@ const confirmDeleteTable = (tableId) => {
 
 const deleteTable = async (tableId) => {
   try {
-    await axios.delete(`http://localhost:3000/api/v1/deletetable/${tableId}`);
+    await axios.delete(`${apiUrl}deletetable/${tableId}`);
     mesas.value = mesas.value.filter(menu => menu._id !== tableId);
     Swal.fire(
       'Eliminado!',

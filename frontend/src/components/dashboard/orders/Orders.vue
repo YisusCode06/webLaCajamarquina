@@ -1,13 +1,14 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import {apiUrl} from '@/utils/api.js'
 
 const mesas = ref([]);
 const selectedLocation = ref('ALL');
 
 const fetchMesas = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getables');
+        const response = await axios.get(`${apiUrl}getables`);
         mesas.value = response.data.tables;
     } catch (error) {
         console.error('Error al obtener la lista de mesas:', error.message);

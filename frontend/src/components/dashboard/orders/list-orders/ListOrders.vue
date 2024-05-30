@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const orders = ref([]);
 const tables = ref({});
@@ -10,7 +11,7 @@ const menus = ref({});
 
 const loadTables = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getables');
+        const response = await axios.get(`${apiUrl}getables`);
         response.data.tables.forEach(table => {
             tables.value[table._id] = table;
         });
@@ -22,7 +23,7 @@ const loadTables = async () => {
 
 const loadMenus = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getmenus');
+        const response = await axios.get(`${apiUrl}getmenus`);
         response.data.menus.forEach(menu => {
             menus.value[menu._id] = menu;
         });
@@ -35,7 +36,7 @@ const loadMenus = async () => {
 const loadUsers = async () => {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/users', {
+        const response = await axios.get(`${apiUrl}users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -51,7 +52,7 @@ const loadUsers = async () => {
 
 const loadOrders = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getorders');
+        const response = await axios.get(`${apiUrl}getorders`);
         orders.value = response.data.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
     } catch (error) {
         console.error('Error al cargar los pedidos del día:', error.message);
@@ -61,7 +62,7 @@ const loadOrders = async () => {
 
 const changeOrderStatus = async (orderId, newStatus) => {
     try {
-        const response = await axios.put(`http://localhost:3000/api/v1/updateorder/${orderId}`, { status: newStatus });
+        const response = await axios.put(`${apiUrl}updateorder/${orderId}`, { status: newStatus });
         const index = orders.value.findIndex(order => order._id === orderId);
         if (index !== -1) {
             orders.value[index] = response.data.order;
@@ -75,12 +76,12 @@ const changeOrderStatus = async (orderId, newStatus) => {
 
 const markOrderAsPaid = async (orderId, tableId) => {
     try {
-        const response = await axios.put(`http://localhost:3000/api/v1/updateorder/${orderId}`, { isPaid: true });
+        const response = await axios.put(`${apiUrl}updateorder/${orderId}`, { isPaid: true });
         const index = orders.value.findIndex(order => order._id === orderId);
         if (index !== -1) {
             orders.value[index] = response.data.order;
         }
-        await axios.put(`http://localhost:3000/api/v1/updatetable/${tableId}`, { isOccupied: false });
+        await axios.put(`${apiUrl}updatetable/${tableId}`, { isOccupied: false });
         Swal.fire('Éxito', 'Pedido marcado como pagado', 'success');
     } catch (error) {
         console.error('Error al marcar el pedido como pagado:', error.message);
@@ -100,9 +101,9 @@ const deleteOrder = async (orderId, tableId) => {
             confirmButtonText: 'Sí, eliminarlo!'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.delete(`http://localhost:3000/api/v1/deleteorder/${orderId}`);
+                await axios.delete(`${apiUrl}deleteorder/${orderId}`);
                 orders.value = orders.value.filter(order => order._id !== orderId);
-                await axios.put(`http://localhost:3000/api/v1/updatetable/${tableId}`, { isOccupied: false });
+                await axios.put(`${apiUrl}updatetable/${tableId}`, { isOccupied: false });
                 Swal.fire('Eliminado!', 'El pedido ha sido eliminado.', 'success');
             }
         });

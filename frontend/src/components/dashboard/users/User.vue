@@ -56,7 +56,7 @@
                         <td>{{ user.role }}</td>
                         <td>
                             <button @click="toggleUserRole(user)">Cambiar Rol</button>
-                            <button @click="deleteUser(user._id)">Eliminar</button>
+                            <button disabled @click="deleteUser(user._id)">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -69,6 +69,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const users = ref([]);
 const showNewUserForm = ref(false);
@@ -89,7 +90,7 @@ const fetchUsers = async () => {
         return;
     }
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/users', {
+        const response = await axios.get(`${apiUrl}users`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -123,7 +124,7 @@ const saveNewUser = async () => {
         return;
     }
     try {
-        await axios.post('http://localhost:3000/api/v1/register', newUser.value, {
+        await axios.post(`${apiUrl}register`, newUser.value, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -178,7 +179,7 @@ const deleteUser = async (userId) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 // Si se confirma la eliminación, proceder
-                await axios.delete(`http://localhost:3000/api/v1/deleteuser/${userId}`, {
+                await axios.delete(`${apiUrl}deleteuser/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -214,7 +215,7 @@ const toggleUserRole = async (user) => {
         if (result.isConfirmed) {
             // Si se confirma el cambio de rol, proceder
             try {
-                await axios.put(`http://localhost:3000/api/v1/edituser/${user._id}`, { role: newRole }, {
+                await axios.put(`${apiUrl}edituser/${user._id}`, { role: newRole }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

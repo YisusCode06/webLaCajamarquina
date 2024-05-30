@@ -3,6 +3,7 @@ import { ref, watch, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
+import {apiUrl} from '@/utils/api.js'
 
 const userData = ref(null);
 const route = useRoute();
@@ -48,7 +49,7 @@ const searchMenu = async () => {
     }
 
     try {
-        const response = await axios.get(`http://localhost:3000/api/v1/getmenubyname/${menuName.value}`);
+        const response = await axios.get(`${apiUrl}getmenubyname/${menuName.value}`);
         searchResults.value = response.data.menus.filter(menu => menu.availability);
     } catch (error) {
         console.error('Error al buscar el menú:', error.message);
@@ -94,7 +95,7 @@ const total = computed(() => {
 });
 
 const loadnumbertable = async () => {
-    const response = await axios.get(`http://localhost:3000/api/v1/getable/${number.value}`);
+    const response = await axios.get(`${apiUrl}getable/${number.value}`);
 
     numberTable.value = response.data.table;
     console.log(numberTable)
@@ -113,7 +114,7 @@ onMounted(async () => {
     }
 
     try {
-        const response = await axios.get('http://localhost:3000/api/v1/getuser', {
+        const response = await axios.get(`${apiUrl}getuser`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -166,8 +167,8 @@ const saveOrder = async () => {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                await axios.post('http://localhost:3000/api/v1/neworder', order);
-                await axios.put(`http://localhost:3000/api/v1/updatetable/${number.value}`, { isOccupied: true });
+                await axios.post(`${apiUrl}neworder`, order);
+                await axios.put(`${apiUrl}updatetable/${number.value}`, { isOccupied: true });
                 Swal.fire('Asignado!', 'Pedido asignado exitosamente', 'success');
                 clearLocalStorage();
                 router.push('/dashboard/orders');
