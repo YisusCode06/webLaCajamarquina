@@ -1,1 +1,1 @@
-export const apiUrl = 'http://localhost:3000/api/v1/';
+export const apiUrl = 'https://web-la-cajamarquina-back.vercel.app/api/v1/';
