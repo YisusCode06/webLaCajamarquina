@@ -51,7 +51,7 @@ const handleSubmit = async (event) => {
         </div>
         <button type="submit" class="login-button">Ingresar</button>
         <div class="link-passoff">
-          <a class="" href="">Si Olvidaste la contraseña contacte al administrador</a>
+          <a class="" href="">¿Olvidaste tu contraseña?</a>
         </div>
       </form>
     </div>

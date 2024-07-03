@@ -16,7 +16,7 @@
             <option value="ESPACIO1">Espacio 1</option>
             <option value="ESPACIO2">Espacio 2</option>
           </select>
-
+          
           <label for="newIsOccupied">Ocupado:</label>
           <select id="newIsOccupied" v-model="newTable.isOccupied" required>
             <option :value="true">Sí</option>
@@ -56,11 +56,12 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { apiUrl } from '@/utils/api.js';
+import {apiUrl} from '@/utils/api.js'
 
 const mesas = ref([]);
 const showNewMesaForm = ref(false);
@@ -94,24 +95,10 @@ const cancelNewTable = () => {
   showNewMesaForm.value = false;
 };
 
-const validateTable = () => {
-  if (newTable.value.capacity > 4) {
-    Swal.fire({
-      title: 'Capacidad no válida',
-      text: 'La capacidad de la mesa no puede ser superior a 4.',
-      icon: 'error'
-    });
-    return false;
-  }
-  return true;
-};
-
 const confirmSaveNewMesa = () => {
-  if (!validateTable()) return;
-
   Swal.fire({
     title: '¿Estás seguro?',
-    text: '¡Deseas guardar esta mesa!',
+    text: "¡Deseas guardar esta mesa!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -162,7 +149,7 @@ const editTable = (table) => {
 const confirmDeleteTable = (tableId) => {
   Swal.fire({
     title: '¿Estás seguro?',
-    text: '¡No podrás revertir esto!',
+    text: "¡No podrás revertir esto!",
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -178,7 +165,7 @@ const confirmDeleteTable = (tableId) => {
 const deleteTable = async (tableId) => {
   try {
     await axios.delete(`${apiUrl}deletetable/${tableId}`);
-    mesas.value = mesas.value.filter(mesa => mesa._id !== tableId);
+    mesas.value = mesas.value.filter(menu => menu._id !== tableId);
     Swal.fire(
       'Eliminado!',
       'La mesa ha sido eliminada.',
@@ -196,6 +183,7 @@ const deleteTable = async (tableId) => {
 
 onMounted(fetchMesas);
 </script>
+
 
 <style scoped>
 @import url('./Tables.css');

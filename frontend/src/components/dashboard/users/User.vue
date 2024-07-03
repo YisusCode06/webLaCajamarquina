@@ -40,9 +40,9 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>DNI</th>
+                        <th>dni</th>
                         <th>Email</th>
-                        <th>Teléfono</th>
+                        <th>Telefono</th>
                         <th>Rol</th>
                         <th class="th-acciones">Acciones</th>
                     </tr>
@@ -69,7 +69,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { apiUrl } from '@/utils/api.js';
+import {apiUrl} from '@/utils/api.js'
 
 const users = ref([]);
 const showNewUserForm = ref(false);
@@ -104,7 +104,6 @@ const fetchUsers = async () => {
 const toggleNewUserForm = () => {
     showNewUserForm.value = !showNewUserForm.value;
 };
-
 const cancelNewUser = () => {
     newUser.value = {
         name: '',
@@ -118,18 +117,7 @@ const cancelNewUser = () => {
     showNewUserForm.value = false;
 };
 
-const validateNewUser = () => {
-    if (newUser.value.password !== newUser.value.repassword) {
-        alert('Las contraseñas no coinciden.');
-        return false;
-    }
-    return true;
-};
-
 const saveNewUser = async () => {
-    if (!validateNewUser()) {
-        return;
-    }
     const token = localStorage.getItem('token');
     if (!token) {
         console.error('No se ha encontrado un token de autenticación.');
@@ -141,7 +129,8 @@ const saveNewUser = async () => {
                 Authorization: `Bearer ${token}`
             }
         });
-        await fetchUsers(); // Recargar la lista de usuarios
+        users.value.push(newUser.value);
+        // Limpiar el formulario
         newUser.value = {
             name: '',
             dni: '',
@@ -177,6 +166,7 @@ const deleteUser = async (userId) => {
                 return;
             }
         }
+        // Mostrar alerta de confirmación
         Swal.fire({
             title: '¿Estás seguro?',
             text: 'Esta acción no se puede deshacer.',
@@ -188,12 +178,13 @@ const deleteUser = async (userId) => {
             cancelButtonText: 'Cancelar'
         }).then(async (result) => {
             if (result.isConfirmed) {
+                // Si se confirma la eliminación, proceder
                 await axios.delete(`${apiUrl}deleteuser/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                await fetchUsers(); // Recargar la lista de usuarios
+                users.value = users.value.filter(user => user._id !== userId);
                 Swal.fire('Eliminado!', 'El usuario ha sido eliminado.', 'success');
             }
         });
@@ -202,6 +193,7 @@ const deleteUser = async (userId) => {
     }
 };
 
+
 const toggleUserRole = async (user) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -209,16 +201,7 @@ const toggleUserRole = async (user) => {
         return;
     }
     const newRole = user.role === 'ADMIN' ? 'USER' : 'ADMIN';
-    if (newRole === 'USER') {
-        const adminCount = users.value.filter(u => u.role === 'ADMIN').length;
-        if (adminCount === 1) {
-            Swal.fire({
-                title: 'No se puede cambiar el rol del último administrador.',
-                icon: 'error'
-            });
-            return;
-        }
-    }
+    // Mostrar alerta de confirmación
     Swal.fire({
         title: '¿Estás seguro?',
         text: `Deseas cambiar el rol de ${user.name} a ${newRole === 'ADMIN' ? 'Administrador' : 'Usuario'}.`,
@@ -230,13 +213,14 @@ const toggleUserRole = async (user) => {
         cancelButtonText: 'Cancelar'
     }).then(async (result) => {
         if (result.isConfirmed) {
+            // Si se confirma el cambio de rol, proceder
             try {
                 await axios.put(`${apiUrl}edituser/${user._id}`, { role: newRole }, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                await fetchUsers(); // Recargar la lista de usuarios
+                user.role = newRole;
                 Swal.fire('Cambiado!', 'El rol del usuario ha sido actualizado.', 'success');
             } catch (error) {
                 console.error('Error al cambiar el rol del usuario:', error.message);
@@ -246,7 +230,6 @@ const toggleUserRole = async (user) => {
     });
 };
 </script>
-
 
 <style scoped>
 @import url('./Users.css');
