@@ -144,7 +144,7 @@ const confirmSaveMenu = () => {
 
 const saveNewMenu = async () => {
     try {
-        await axios.post('`${apiUrl}newmenu', newMenuItem.value);
+        await axios.post(`${apiUrl}newmenu`, newMenuItem.value); 
         fetchMenus();
         resetFormValues();
         showNewMenuForm.value = false;
@@ -154,6 +154,7 @@ const saveNewMenu = async () => {
         Swal.fire('Error!', 'Hubo un problema al crear el menú.', 'error');
     }
 };
+
 
 const saveEditedMenu = async () => {
     try {
